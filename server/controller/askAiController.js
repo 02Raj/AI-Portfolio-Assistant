@@ -1,5 +1,5 @@
 // server/controller/askController.js
-const resumeData = require('../data/resumeData');
+const resumeData = require('../data/resumeData.js');
 const { getAIResponse } = require('../services/geminiService'); 
 
 exports.askAI = async (req, res) => {
