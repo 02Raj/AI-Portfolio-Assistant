@@ -115,7 +115,7 @@ I’m currently working at Slantco International Private Limited, located in Sec
 
 I’m also passionate about integrating AI-driven features, like in my project ShinNow, where I worked on an AI-powered evaluation platform.
 
-When I’m not coding, I love playing football, exploring new tech stacks, and enjoying a plate of biryani! 🍲⚽"
+When I’m not coding, I love playing cricket, exploring new tech stacks, and enjoying a plate of biryani! 🍲⚽"
 
 Resume data: ${JSON.stringify(resumeData)}
 
