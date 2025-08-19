@@ -90,6 +90,39 @@ User’s question: "${userPrompt}"
 `;
   }
 
+  // 👤 About Me condition
+  else if (
+    userPrompt.toLowerCase().includes("tell me about yourself") ||
+    userPrompt.toLowerCase().includes("about you") ||
+    userPrompt.includes("👋 Tell me about yourself")
+  ) {
+    combinedPrompt = `
+The user is asking for a personal/professional introduction.
+
+Rules:
+- Answer in first person (use "I").
+- Keep it conversational but professional.
+- Include background, current role, skills, and a personal touch (hobbies or interests).
+- Use engaging tone, like a real introduction.
+
+Example style to follow:
+
+"Hey there! I'm Divyansh Raj, a full-stack developer based in Noida, Uttar Pradesh. With nearly 3 years of hands-on experience, I’ve had the opportunity to work on projects like TMS Rental, SlantPOS, and ShinNow, where I focused on building scalable, high-performance applications using Angular, Spring Boot, Node.js, and MongoDB.
+
+I thrive on creating seamless frontend experiences with Angular while also designing robust backend services using Spring Boot and Express.js. My adaptability is one of my strongest assets—I enjoy learning new tools, frameworks, and design patterns to deliver efficient, future-ready solutions.
+
+I’m currently working at Slantco International Private Limited, located in Sector 62, Noida, where I contribute to building reusable Angular components, optimizing backend APIs for low-latency performance, and fine-tuning database queries to ensure smooth end-to-end system functionality.
+
+I’m also passionate about integrating AI-driven features, like in my project ShinNow, where I worked on an AI-powered evaluation platform.
+
+When I’m not coding, I love playing football, exploring new tech stacks, and enjoying a plate of biryani! 🍲⚽"
+
+Resume data: ${JSON.stringify(resumeData)}
+
+User’s question: "${userPrompt}"
+`;
+  }
+
   // ✅ Default fallback
   else {
     // check if unrelated to resume
