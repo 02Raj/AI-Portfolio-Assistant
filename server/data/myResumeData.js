@@ -35,5 +35,5 @@ module.exports = {
   softSkills: [
     "Team Collaboration", "Deadline Management", "Quick Learner", "Problem Solving"
   ],
-  careerGoals: "To build scalable, efficient, and intelligent software solutions leveraging latest technologies."
+  careerGoals: "To build scalable, efficient, and intelligent software solutions leveraging latest technologies. "
 };
