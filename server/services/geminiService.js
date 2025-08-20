@@ -11,12 +11,13 @@ const textModel = genAI.getGenerativeModel({
   },
 });
 
-async function getAIResponse(resumeData, userPrompt) {
+async function getAIResponse(resumeData, userPrompt, sessionId) {
   console.log("👉 User Prompt:", userPrompt);
+  console.log("👉 Session ID:", sessionId);
 
   let combinedPrompt = "";
 
-  // 🚀 Projects condition
+  // 🚀 Recent projects condition
   if (
     userPrompt.toLowerCase().includes("recent projects") ||
     userPrompt.includes("🚀 Recent projects")
@@ -31,14 +32,14 @@ Rules:
 "Absolutely! Here are a few recent projects I'm really proud of:
 
 1. Project Name
-   • Tech Stack: [list]  
-   • Overview: [short description]  
-   • Outcome: [business or technical impact]  
+   • Tech Stack: [list]   
+   • Overview: [short description]   
+   • Outcome: [business or technical impact]   
 
 2. Project Name
-   • Tech Stack: [list]  
-   • Overview: [short description]  
-   • Outcome: [business or technical impact]  
+   • Tech Stack: [list]   
+   • Overview: [short description]   
+   • Outcome: [business or technical impact]   
 
 Each project should sound professional and impactful.
 "
@@ -48,7 +49,6 @@ Resume data: ${JSON.stringify(resumeData)}
 User’s question: "${userPrompt}"
 `;
   }
-
   // 🎯 Career goals condition
   else if (
     userPrompt.toLowerCase().includes("career goals") ||
@@ -69,7 +69,6 @@ Resume data: ${JSON.stringify(resumeData)}
 User’s question: "${userPrompt}"
 `;
   }
-
   // ⚙️ Technical skills condition
   else if (
     userPrompt.toLowerCase().includes("technical skills") ||
@@ -89,8 +88,7 @@ Resume data: ${JSON.stringify(resumeData)}
 User’s question: "${userPrompt}"
 `;
   }
-
-  // 👤 About Me condition
+  // 👤 About me condition
   else if (
     userPrompt.toLowerCase().includes("tell me about yourself") ||
     userPrompt.toLowerCase().includes("about you") ||
@@ -117,15 +115,35 @@ I’m also passionate about integrating AI-driven features, like in my project S
 
 When I’m not coding, I love playing cricket, exploring new tech stacks, and enjoying a plate of biryani! 🍲⚽"
 
-Resume data: ${JSON.stringify(resumeData)}
+Resume data:
+${JSON.stringify(resumeData, null, 2)}
+
+User’s question:
+"${userPrompt}"
+`;
+  }
+  // 🎉 Hiring interest condition (your fix)
+  else if (
+    userPrompt.toLowerCase().includes("hire you") ||
+    userPrompt.toLowerCase().includes("i want to hire you") ||
+    userPrompt.includes("✨ I want to hire you")
+  ) {
+    combinedPrompt = `
+The user expressed hiring interest.
+
+Rules:
+- Answer in first person.
+- Be enthusiastic, professional, and open to next steps.
+- Provide a positive, engaging reply like:
+
+"That's fantastic to hear! I'm excited about the opportunity. Could you share more about the role and the team I'll be working with? I'm eager to discuss how my skills and experience can add value to your projects. 😊
+If you'd like, we can also schedule a call to dive deeper into the details. Just let me know!"
 
 User’s question: "${userPrompt}"
 `;
   }
-
   // ✅ Default fallback
   else {
-    // check if unrelated to resume
     const resumeKeywords = ["skills", "projects", "experience", "career", "work", "job"];
     const isResumeRelated = resumeKeywords.some(keyword =>
       userPrompt.toLowerCase().includes(keyword)
@@ -153,9 +171,7 @@ User’s question: "${userPrompt}"
     const result = await textModel.generateContent(combinedPrompt);
     const response = await result.response;
     const textResponse = await response.text();
-
     console.log("Gemini Raw Response:", textResponse);
-
     return textResponse || "Sorry, no answer available.";
   } catch (error) {
     console.error("Gemini API Error:", error?.response?.data || error.message || error);
